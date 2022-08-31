@@ -6,10 +6,13 @@ Rails.application.routes.draw do
   get 'signup', to: 'users#new'
   resources :users, except: [:new]
 
-
+  #authentication
   get 'login', to: 'sessions#new'
   post 'login', to: 'sessions#create'
   delete 'logout', to: 'sessions#destroy'
+
+  #categories
+  resources :categories, except: [:destroy]
 
   #error routes
   get '/404', to: 'errors#not_found'
