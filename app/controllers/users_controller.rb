@@ -2,6 +2,7 @@ class UsersController < ApplicationController
 	before_action :set_user, only: [:show, :edit, :update, :destroy]
 	before_action :authenticate_user, only: [:edit, :update]
 	before_action :require_same_user, only: [:edit, :update, :destroy]
+	before_action :check_user_logged_in, only: [:create, :new]
 
 	def index
 		@users = User.paginate(page: params[:page], per_page: 5)
@@ -59,5 +60,9 @@ class UsersController < ApplicationController
 			flash[:alert] = "You can only edit or delete your own account"
 			redirect_to user_path(@user)
 		end
+	end
+
+	def check_user_logged_in
+		redirect_to root_path if logged_in?
 	end
 end

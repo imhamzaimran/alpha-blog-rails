@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+	before_action :check_user_logged_in, only: [:create, :new]
+
 	def new
 	end
 
@@ -18,5 +20,10 @@ class SessionsController < ApplicationController
 		session[:user_id] = nil
 		flash[:notice] = "Successfully logged out"
 		redirect_to root_path
+	end
+
+	private
+	def check_user_logged_in
+		redirect_to root_path if logged_in?
 	end
 end
